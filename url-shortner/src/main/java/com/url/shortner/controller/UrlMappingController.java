@@ -11,6 +11,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -29,5 +30,13 @@ public class UrlMappingController {
             return  ResponseEntity.ok(urlMappingDTO);
 
         }
+
+        @GetMapping("/myurls")
+     @PreAuthorize("hasRole('USER')")
+     public ResponseEntity<List<UrlMappingDTO>> getUserUrls(Principal principal){
+          User user = userService.findByUsername(principal.getName());
+            List<UrlMappingDTO> Urls = urlMappingService.getUserByUrls(user);
+            return  ResponseEntity.ok(Urls);
+      }
 
 }
