@@ -22,7 +22,7 @@ const Navbar = () => {
           <NavLink to="/" currentPath={path} label="Home" />
           <NavLink to="/about" currentPath={path} label="About" />
           <Link
-            to=""
+            to="/register"
             className="bg-rose-700 text-white px-4 py-2 rounded-md hover:bg-rose-600 transition"
           >
             Sign Up
@@ -49,7 +49,7 @@ const Navbar = () => {
           <NavLink to="/" currentPath={path} label="Home" mobile />
           <NavLink to="/about" currentPath={path} label="About" mobile />
           <Link
-            to=""
+            to="/register"
             className="bg-rose-700 text-white px-4 py-2 rounded-md hover:bg-rose-600 transition text-center"
           >
             Sign Up
