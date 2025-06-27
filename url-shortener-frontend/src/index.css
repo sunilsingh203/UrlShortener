@@ -3,3 +3,22 @@
 
 
 @import "tailwindcss";
+
+@theme {
+  --background-image-custom-gradient: linear-gradient(to right, #3b82f6, #9333ea);
+  --background-image-custom-gradient-2: linear-gradient(to left, #3b82f6, #f43f5e);
+  --background-image-card-gradient: linear-gradient(to right, #38b2ac, #4299e1);
+}
+
+/* Import utilities if you want them still */
+@layer utilities {
+  .bg-custom-gradient {
+    background-image: var(--background-image-custom-gradient);
+  }
+  .bg-custom-gradient-2 {
+    background-image: var(--background-image-custom-gradient-2);
+  }
+  .bg-card-gradient {
+    background-image: var(--background-image-card-gradient);
+  }
+}
