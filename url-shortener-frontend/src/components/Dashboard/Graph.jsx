@@ -24,22 +24,23 @@ const Graph = ({ graphData }) => {
   const userPerDay = graphData?.map((item) => item.count);
 
   const data = {
-    labels:
-      graphData.length > 0
-        ? labels
-        : ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
+    labels: graphData.length > 0 ? labels : ["", "", "", "", "", "", ""],
     datasets: [
       {
         label: "Total Clicks",
-        data:
-          graphData.length > 0
-            ? userPerDay
-            : [1, 3, 2, 5, 4, 6, 3],
+        data: graphData.length > 0 ? userPerDay : [1, 3, 2, 5, 4, 6, 3],
         backgroundColor: (context) => {
           const ctx = context.chart.ctx;
           const gradient = ctx.createLinearGradient(0, 0, 0, 300);
-          gradient.addColorStop(0, "#3b82f6");
-          gradient.addColorStop(1, "#60a5fa");
+
+          if (graphData.length > 0) {
+            gradient.addColorStop(0, "#3b82f6");
+            gradient.addColorStop(1, "#60a5fa");
+          } else {
+            gradient.addColorStop(0, "rgba(59, 130, 246, 0.2)");
+            gradient.addColorStop(1, "rgba(96, 165, 250, 0.2)");
+          }
+
           return gradient;
         },
         borderRadius: 6,
@@ -116,7 +117,7 @@ const Graph = ({ graphData }) => {
     },
     animation: {
       duration: 1000,
-      easing: 'easeOutQuart',
+      easing: "easeOutQuart",
     },
   };
 
