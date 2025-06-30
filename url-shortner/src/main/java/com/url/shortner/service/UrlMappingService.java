@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -65,19 +66,30 @@ public class UrlMappingService {
 
     public List<ClickEventDTO> getClickEventsByDate(String shortUrl, LocalDateTime start, LocalDateTime end) {
         UrlMapping urlMapping = urlMappingRepository.findByShortUrl(shortUrl);
-        if(urlMapping == null) {
-            return clickEventRepository.findByUrlMappingAndClickDateBetween(urlMapping,start,end).stream()
-                    .collect(Collectors.groupingBy(click -> click.getClickDate().toLocalDate(), Collectors.counting())).entrySet().stream()
-                    .map(entry->{
-                        ClickEventDTO clickEventDTO = new ClickEventDTO();
-                        clickEventDTO.setClickDate(entry.getKey());
-                        clickEventDTO.setCount(entry.getValue());
-                        return clickEventDTO;
-                    })
-                    .collect(Collectors.toList());
+
+        if (urlMapping == null) {
+            // Optionally log that the shortUrl was not found
+            return Collections.emptyList(); // Or throw custom NotFoundException
         }
-        return  null;
+
+        List<ClickEvent> clickEvents = clickEventRepository.findByUrlMappingAndClickDateBetween(urlMapping, start, end);
+
+        return clickEvents.stream()
+                .collect(Collectors.groupingBy(
+                        click -> click.getClickDate().toLocalDate(),
+                        Collectors.counting()
+                ))
+                .entrySet()
+                .stream()
+                .map(entry -> {
+                    ClickEventDTO dto = new ClickEventDTO();
+                    dto.setClickDate(entry.getKey());
+                    dto.setCount(entry.getValue());
+                    return dto;
+                })
+                .collect(Collectors.toList());
     }
+
 
 
     public Map<LocalDate, Long> getTotalClicksByUserAndDate(User user, LocalDate start, LocalDate end) {
