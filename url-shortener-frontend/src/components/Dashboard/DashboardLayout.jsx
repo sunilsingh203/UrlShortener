@@ -5,6 +5,7 @@ import { useFetchMyShortUrls, useFetchTotalClicks } from '../../hooks/useQuery'
 import ShortenPopUp from './ShortenPopUp'
 import { FaLink } from 'react-icons/fa'
 import ShortenUrlList from './ShortenUrlList.jsx'
+import { useNavigate } from 'react-router-dom'
 
 const DashboardLayout = () => {
     // const refetch = false;
@@ -12,14 +13,14 @@ const DashboardLayout = () => {
     const [shortenPopUp, setShortenPopUp] = useState(false);
 
     // console.log(useFetchTotalClicks(token, onError));
-    
+    const navigate = useNavigate();
 
     const {isLoading, data: myShortenUrls, refetch } = useFetchMyShortUrls(token, onError)
     
     const {isLoading: loader, data: totalClicks} = useFetchTotalClicks(token, onError)
 
     function onError() {
-        console.log("ERROR");
+        navigate("/error");
     }
 
   return (
