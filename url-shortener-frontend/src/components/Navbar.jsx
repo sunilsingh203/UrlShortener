@@ -25,7 +25,7 @@ const Navbar = () => {
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link to="/" className="text-white text-2xl font-bold italic tracking-wide">
-              Linklytics
+              Shrinkify
             </Link>
           </div>
 

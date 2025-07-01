@@ -10,10 +10,10 @@ const Card = ({ title, desc }) => {
       }}
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
-      className="shadow-md shadow-slate-400 border flex flex-col px-4 py-8  gap-3 rounded-sm"
+      className="shadow-md shadow-slate-400 border flex flex-col px-4 py-8   gap-3 rounded-sm"
     >
-      <h1 className="text-slate-900 text-xl font-bold ">{title}</h1>
-      <p className="text-slate-700 text-sm"> {desc}</p>
+      <h1 className="text-zinc-100 text-xl font-bold ">{title}</h1>
+      <p className="text-zinc-100 text-sm"> {desc}</p>
     </motion.div>
   );
 };

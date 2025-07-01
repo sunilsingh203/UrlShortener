@@ -56,7 +56,7 @@ const Graph = ({ graphData }) => {
       legend: {
         display: true,
         labels: {
-          color: "#374151",
+          color: "#e5e7eb", // gray-200
           font: {
             size: 14,
             weight: "bold",
@@ -64,9 +64,9 @@ const Graph = ({ graphData }) => {
         },
       },
       tooltip: {
-        backgroundColor: "#f9fafb",
-        titleColor: "#111827",
-        bodyColor: "#1f2937",
+        backgroundColor: "#1f2937", // gray-800
+        titleColor: "#f9fafb",      // gray-50
+        bodyColor: "#e5e7eb",       // gray-200
         borderColor: "#3b82f6",
         borderWidth: 1,
         cornerRadius: 6,
@@ -76,10 +76,10 @@ const Graph = ({ graphData }) => {
       y: {
         beginAtZero: true,
         grid: {
-          color: "rgba(0,0,0,0.05)",
+          color: "rgba(255,255,255,0.1)",
         },
         ticks: {
-          color: "#6b7280",
+          color: "#d1d5db", // gray-300
           callback: function (value) {
             if (Number.isInteger(value)) {
               return value.toString();
@@ -90,7 +90,7 @@ const Graph = ({ graphData }) => {
         title: {
           display: true,
           text: "Number Of Clicks",
-          color: "#1f2937",
+          color: "#e5e7eb", // gray-200
           font: {
             size: 16,
             weight: "bold",
@@ -102,12 +102,12 @@ const Graph = ({ graphData }) => {
           display: false,
         },
         ticks: {
-          color: "#6b7280",
+          color: "#d1d5db",
         },
         title: {
           display: true,
           text: "Date",
-          color: "#1f2937",
+          color: "#e5e7eb",
           font: {
             size: 16,
             weight: "bold",
@@ -121,7 +121,13 @@ const Graph = ({ graphData }) => {
     },
   };
 
-  return <Bar className="w-full" data={data} options={options} />;
+  return (
+    <div className="bg-zinc-800 p-4 rounded-2xl shadow w-full">
+      <div className="h-80 w-full">
+        <Bar data={data} options={options} />
+      </div>
+    </div>
+  );
 };
 
 export default Graph;

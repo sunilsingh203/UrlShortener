@@ -8,8 +8,8 @@ import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
 import api from "../../api/api";
 import { useStoreContext } from "../../contextApi/ContextApi";
-import { Hourglass } from "react-loader-spinner"; // if you use this
-import Graph from "./Graph"; // adjust import path to your Graph component
+import { Hourglass } from "react-loader-spinner";
+import Graph from "./Graph";
 
 const ShortenItem = ({ originalUrl, shortUrl, clickCount, createdDate }) => {
   const { token } = useStoreContext();
@@ -68,35 +68,35 @@ const ShortenItem = ({ originalUrl, shortUrl, clickCount, createdDate }) => {
   }, [isCopied]);
 
   return (
-    <div className="bg-slate-100 shadow-lg border border-dotted border-slate-500 px-6 sm:py-1 py-3 rounded-md transition-all duration-100">
+    <div className="bg-zinc-800 shadow-lg shadow-zinc-900 border border-dotted border-zinc-600 px-6 sm:py-1 py-3 rounded-md transition-all duration-100">
       <div className="flex sm:flex-row flex-col sm:justify-between w-full sm:gap-0 gap-5 py-5">
         {/* Left Side */}
         <div className="flex-1 sm:space-y-1 max-w-full overflow-x-auto overflow-y-hidden">
-          <div className="text-slate-900 pb-1 sm:pb-0 flex items-center gap-2">
+          <div className="pb-1 sm:pb-0 flex items-center gap-2">
             <a
               href={fullShortUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[17px] font-montserrat font-[600] text-linkColor"
+              className="text-[17px] font-montserrat font-[600] text-blue-400"
             >
               {subDomain + "/" + shortUrl}
             </a>
-            <FaExternalLinkAlt className="text-linkColor" />
+            <FaExternalLinkAlt className="text-blue-400" />
           </div>
           <div className="flex items-center gap-1">
-            <h3 className="text-slate-700 font-[400] text-[17px]">
+            <h3 className="text-zinc-300 font-[400] text-[17px] break-words">
               {originalUrl}
             </h3>
           </div>
           <div className="flex items-center gap-8 pt-6">
-            <div className="flex gap-1 items-center font-semibold text-green-800">
+            <div className="flex gap-1 items-center font-semibold text-green-400">
               <MdOutlineAdsClick className="text-[22px] me-1" />
               <span className="text-[16px]">{clickCount}</span>
               <span className="text-[15px]">
                 {clickCount === 0 || clickCount === 1 ? "Click" : "Clicks"}
               </span>
             </div>
-            <div className="flex items-center gap-2 font-semibold text-lg text-slate-800">
+            <div className="flex items-center gap-2 font-semibold text-lg text-zinc-200">
               <FaRegCalendarAlt />
               <span className="text-[17px]">
                 {dayjs(createdDate).format("MMM DD, YYYY")}
@@ -109,7 +109,7 @@ const ShortenItem = ({ originalUrl, shortUrl, clickCount, createdDate }) => {
         <div className="flex flex-1 sm:justify-end items-center gap-4">
           <CopyToClipboard text={fullShortUrl} onCopy={() => setIsCopied(true)}>
             <div
-              className={`flex cursor-pointer gap-1 items-center py-2 px-6 rounded-md text-white shadow-md shadow-slate-500 transition-all duration-200 ${
+              className={`flex cursor-pointer gap-1 items-center py-2 px-6 rounded-md text-white shadow-md shadow-zinc-700 transition-all duration-200 ${
                 isCopied ? "bg-green-600" : "bg-blue-600"
               }`}
             >
@@ -119,7 +119,7 @@ const ShortenItem = ({ originalUrl, shortUrl, clickCount, createdDate }) => {
           </CopyToClipboard>
           <div
             onClick={() => analyticsHandler(shortUrl)}
-            className="flex cursor-pointer gap-1 items-center bg-rose-700 py-2 font-semibold shadow-md shadow-slate-500 px-6 rounded-md text-white"
+            className="flex cursor-pointer gap-1 items-center bg-rose-700 py-2 font-semibold shadow-md shadow-zinc-700 px-6 rounded-md text-white"
           >
             <span>Analytics</span>
             <MdAnalytics className="text-md" />
@@ -132,7 +132,7 @@ const ShortenItem = ({ originalUrl, shortUrl, clickCount, createdDate }) => {
         <div
           className={`${
             analyticToggle ? "flex" : "hidden"
-          } max-h-96 sm:mt-0 mt-5 min-h-96 relative border-t-2 w-full overflow-hidden`}
+          } max-h-96 sm:mt-0 mt-5 min-h-96 relative border-t border-zinc-600 w-full overflow-hidden`}
         >
           {loader ? (
             <div className="min-h-[calc(450px-140px)] flex justify-center items-center w-full">
@@ -144,19 +144,19 @@ const ShortenItem = ({ originalUrl, shortUrl, clickCount, createdDate }) => {
                   ariaLabel="hourglass-loading"
                   wrapperStyle={{}}
                   wrapperClass=""
-                  colors={["#306cce", "#72a1ed"]}
+                  colors={["#3b82f6", "#60a5fa"]}
                 />
-                <p className="text-slate-700">Please Wait...</p>
+                <p className="text-zinc-300">Please Wait...</p>
               </div>
             </div>
           ) : (
             <>
               {analyticsData.length === 0 && (
                 <div className="absolute flex flex-col justify-center sm:items-center items-end w-full left-0 top-0 bottom-0 right-0 m-auto">
-                  <h1 className="text-slate-800 font-serif sm:text-2xl text-[15px] font-bold mb-1">
+                  <h1 className="text-zinc-100 font-serif sm:text-2xl text-[15px] font-bold mb-1">
                     No Data For This Time Period
                   </h1>
-                  <h3 className="sm:w-96 w-[90%] sm:ml-0 pl-6 text-center sm:text-lg text-[12px] text-slate-600">
+                  <h3 className="sm:w-96 w-[90%] sm:ml-0 pl-6 text-center sm:text-lg text-[12px] text-zinc-400">
                     Share your short link to view where your engagements are coming from
                   </h3>
                 </div>

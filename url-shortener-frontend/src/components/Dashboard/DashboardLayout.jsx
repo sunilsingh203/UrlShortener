@@ -25,11 +25,11 @@ const DashboardLayout = () => {
     }
 
   return (
-    <div className="lg:px-14 sm:px-8 px-4 min-h-[calc(100vh-64px)]">
+    <div className=" bg-zinc-800 lg:px-14 sm:px-8 px-4 min-h-[calc(100vh-64px)]">
         {loader ? ( 
             <Loader />
         ): ( 
-        <div className="lg:w-[90%] w-full mx-auto py-16">
+        <div className="bg-zinc-800 lg:w-[90%] w-full mx-auto py-16">
             <div className=" h-96 relative ">
                 {totalClicks.length === 0 && (
                      <div className="absolute flex flex-col  justify-center sm:items-center items-end  w-full left-0 top-0 bottom-0 right-0 m-auto">
