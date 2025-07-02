@@ -5,7 +5,7 @@ import { IoCopy } from "react-icons/io5";
 import { LiaCheckSolid } from "react-icons/lia";
 import { MdAnalytics, MdOutlineAdsClick } from "react-icons/md";
 import dayjs from "dayjs";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import api from "../../api/api";
 import { useStoreContext } from "../../contextApi/ContextApi";
 import { Hourglass } from "react-loader-spinner";
@@ -21,11 +21,8 @@ const ShortenItem = ({ originalUrl, shortUrl, clickCount, createdDate }) => {
   const [selectedUrl, setSelectedUrl] = useState("");
   const [analyticsData, setAnalyticsData] = useState([]);
 
-  const subDomain = import.meta.env.VITE_REACT_SUBDOMAIN.replace(
-    /^https?:\/\//,
-    ""
-  );
-  const fullShortUrl = `${import.meta.env.VITE_REACT_SUBDOMAIN}/${shortUrl}`;
+  const subDomain = import.meta.env.VITE_REACT_FRONT_END_URL.replace(/^https?:\/\//, "");
+  const fullShortUrl = `${import.meta.env.VITE_REACT_FRONT_END_URL}/s/${shortUrl}`;
 
   const analyticsHandler = (shortUrl) => {
     if (!analyticToggle) setSelectedUrl(shortUrl);
@@ -47,7 +44,6 @@ const ShortenItem = ({ originalUrl, shortUrl, clickCount, createdDate }) => {
       );
       setAnalyticsData(data);
       setSelectedUrl("");
-      console.log(data);
     } catch (error) {
       navigate("/error");
       console.error(error);
@@ -68,104 +64,80 @@ const ShortenItem = ({ originalUrl, shortUrl, clickCount, createdDate }) => {
   }, [isCopied]);
 
   return (
-    <div className="bg-zinc-800 shadow-lg shadow-zinc-900 border border-dotted border-zinc-600 px-6 sm:py-1 py-3 rounded-md transition-all duration-100">
-      <div className="flex sm:flex-row flex-col sm:justify-between w-full sm:gap-0 gap-5 py-5">
-        {/* Left Side */}
-        <div className="flex-1 sm:space-y-1 max-w-full overflow-x-auto overflow-y-hidden">
-          <div className="pb-1 sm:pb-0 flex items-center gap-2">
-            <a
-              href={fullShortUrl}
+    <div className="bg-zinc-800 border border-zinc-600 rounded-xl shadow-lg shadow-zinc-900 p-6 mb-6 transition-all duration-200 hover:shadow-xl">
+      {/* Top section */}
+      <div className="flex flex-col sm:flex-row sm:justify-between gap-4">
+        <div className="flex-1">
+          <div className="flex items-center gap-2 mb-2">
+            <Link
+              to={`/s/${shortUrl}`}
               target="_blank"
-              rel="noopener noreferrer"
-              className="text-[17px] font-montserrat font-[600] text-blue-400"
+              className="text-blue-400 font-semibold text-[17px] truncate hover:underline"
             >
-              {subDomain + "/" + shortUrl}
-            </a>
-            <FaExternalLinkAlt className="text-blue-400" />
+              {subDomain + "/s/" + shortUrl}
+            </Link>
+            <FaExternalLinkAlt className="text-blue-400 text-sm" />
           </div>
-          <div className="flex items-center gap-1">
-            <h3 className="text-zinc-300 font-[400] text-[17px] break-words">
-              {originalUrl}
-            </h3>
+          <div className="text-zinc-300 text-[15px] break-words">
+            {originalUrl}
           </div>
-          <div className="flex items-center gap-8 pt-6">
-            <div className="flex gap-1 items-center font-semibold text-green-400">
-              <MdOutlineAdsClick className="text-[22px] me-1" />
-              <span className="text-[16px]">{clickCount}</span>
-              <span className="text-[15px]">
-                {clickCount === 0 || clickCount === 1 ? "Click" : "Clicks"}
-              </span>
+
+          <div className="flex gap-6 mt-4 flex-wrap text-zinc-400">
+            <div className="flex items-center gap-1 text-green-400 font-semibold">
+              <MdOutlineAdsClick className="text-[22px]" />
+              <span>{clickCount}</span>
+              <span>{clickCount === 1 ? "Click" : "Clicks"}</span>
             </div>
-            <div className="flex items-center gap-2 font-semibold text-lg text-zinc-200">
+            <div className="flex items-center gap-2 text-zinc-300 font-semibold">
               <FaRegCalendarAlt />
-              <span className="text-[17px]">
-                {dayjs(createdDate).format("MMM DD, YYYY")}
-              </span>
+              <span>{dayjs(createdDate).format("MMM DD, YYYY")}</span>
             </div>
           </div>
         </div>
 
-        {/* Right Buttons */}
-        <div className="flex flex-1 sm:justify-end items-center gap-4">
+        {/* Buttons always side by side */}
+        <div className="flex gap-3 mt-4 sm:mt-0 p-6">
           <CopyToClipboard text={fullShortUrl} onCopy={() => setIsCopied(true)}>
-            <div
-              className={`flex cursor-pointer gap-1 items-center py-2 px-6 rounded-md text-white shadow-md shadow-zinc-700 transition-all duration-200 ${
-                isCopied ? "bg-green-600" : "bg-blue-600"
-              }`}
-            >
-              <span>{isCopied ? "Copied" : "Copy"}</span>
-              {isCopied ? <LiaCheckSolid className="text-md" /> : <IoCopy className="text-md" />}
-            </div>
+            <button className={`flex items-center gap-2 px-4  rounded-md font-semibold transition 
+              shadow-md hover:brightness-110 ${isCopied ? "bg-green-600" : "bg-blue-600"} text-zinc-100`}>
+              {isCopied ? "Copied" : "Copy"}
+              {isCopied ? <LiaCheckSolid /> : <IoCopy />}
+            </button>
           </CopyToClipboard>
-          <div
+
+          <button
             onClick={() => analyticsHandler(shortUrl)}
-            className="flex cursor-pointer gap-1 items-center bg-rose-700 py-2 font-semibold shadow-md shadow-zinc-700 px-6 rounded-md text-white"
+            className="flex items-center gap-2 bg-rose-700 hover:bg-rose-800 text-white font-semibold px-4  rounded-md shadow-md transition"
           >
-            <span>Analytics</span>
-            <MdAnalytics className="text-md" />
-          </div>
+            Analytics <MdAnalytics />
+          </button>
         </div>
       </div>
 
-      {/* Analytics Section */}
-      <React.Fragment>
-        <div
-          className={`${
-            analyticToggle ? "flex" : "hidden"
-          } max-h-96 sm:mt-0 mt-5 min-h-96 relative border-t border-zinc-600 w-full overflow-hidden`}
-        >
-          {loader ? (
-            <div className="min-h-[calc(450px-140px)] flex justify-center items-center w-full">
-              <div className="flex flex-col items-center gap-1">
-                <Hourglass
-                  visible={true}
-                  height="50"
-                  width="50"
-                  ariaLabel="hourglass-loading"
-                  wrapperStyle={{}}
-                  wrapperClass=""
-                  colors={["#3b82f6", "#60a5fa"]}
-                />
-                <p className="text-zinc-300">Please Wait...</p>
-              </div>
+      {/* Analytics Graph */}
+      <div className={`${analyticToggle ? "mt-6" : "hidden"} border-t border-zinc-600 pt-6`}>
+        {loader ? (
+          <div className="flex justify-center items-center min-h-[150px]">
+            <div className="flex flex-col items-center gap-2">
+              <Hourglass
+                visible={true}
+                height="50"
+                width="50"
+                ariaLabel="hourglass-loading"
+                colors={["#3b82f6", "#60a5fa"]}
+              />
+              <p className="text-zinc-400">Please wait...</p>
             </div>
-          ) : (
-            <>
-              {analyticsData.length === 0 && (
-                <div className="absolute flex flex-col justify-center sm:items-center items-end w-full left-0 top-0 bottom-0 right-0 m-auto">
-                  <h1 className="text-zinc-100 font-serif sm:text-2xl text-[15px] font-bold mb-1">
-                    No Data For This Time Period
-                  </h1>
-                  <h3 className="sm:w-96 w-[90%] sm:ml-0 pl-6 text-center sm:text-lg text-[12px] text-zinc-400">
-                    Share your short link to view where your engagements are coming from
-                  </h3>
-                </div>
-              )}
-              <Graph graphData={analyticsData} />
-            </>
-          )}
-        </div>
-      </React.Fragment>
+          </div>
+        ) : analyticsData.length === 0 ? (
+          <div className="text-center text-zinc-400">
+            <h2 className="text-zinc-100 font-bold text-lg">No Data For This Period</h2>
+            <p className="text-sm mt-1">Share your short link to see engagements here.</p>
+          </div>
+        ) : (
+          <Graph graphData={analyticsData} />
+        )}
+      </div>
     </div>
   );
 };

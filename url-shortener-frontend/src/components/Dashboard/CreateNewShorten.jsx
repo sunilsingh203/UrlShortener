@@ -34,7 +34,7 @@ const CreateNewShorten = ({ setOpen, refetch }) => {
             },
           });
 
-          const shortenUrl = `${import.meta.env.VITE_REACT_SUBDOMAIN}/${res.shortUrl}`;
+          const shortenUrl = `${import.meta.env.VITE_REACT_FRONT_END_URL + "/s/" + `${res.shortUrl}`}`;
           navigator.clipboard.writeText(shortenUrl).then(() => {
             toast.success("Short URL Copied to Clipboard", {
                 position: "bottom-center",
@@ -54,13 +54,13 @@ const CreateNewShorten = ({ setOpen, refetch }) => {
 
 
   return (
-    <div className=" flex justify-center items-center bg-white rounded-md">
+    <div className=" flex justify-center items-center bg-zinc-800 rounded-md">
     <form
         onSubmit={handleSubmit(createShortUrlHandler)}
         className="sm:w-[450px] w-[360px] relative  shadow-custom pt-8 pb-5 sm:px-8 px-4 rounded-lg"
       >
 
-        <h1 className="font-montserrat sm:mt-0 mt-3 text-center  font-bold sm:text-2xl text-[22px] text-slate-800 ">
+        <h1 className="font-montserrat sm:mt-0 mt-3 text-center  font-bold sm:text-2xl text-[22px] text-zinc-300 ">
                 Create New Shorten Url
         </h1>
 
@@ -93,7 +93,8 @@ const CreateNewShorten = ({ setOpen, refetch }) => {
               onClick={() => setOpen(false)}
               className=" absolute right-2 top-2  "
             >
-              <RxCross2 className="text-slate-800   text-3xl" />
+              <RxCross2 className="text-zinc-300
+                 text-3xl" />
             </button>
           </Tooltip>
         )}

@@ -19,57 +19,59 @@ const Navbar = () => {
   const toggleNavbar = () => setNavbarOpen(!navbarOpen);
 
   return (
-    <header className="bg-custom-gradient sticky top-0 z-50 shadow-md">
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-14 h-16 flex items-center">
-        <div className="flex justify-between items-center w-full">
-          {/* Logo */}
-          <div className="flex-shrink-0">
-            <Link to="/" className="text-white text-2xl font-bold italic tracking-wide">
-              Shrinkify
-            </Link>
-          </div>
-
-          {/* Desktop Nav */}
-          <nav className="hidden sm:flex gap-10 items-center ml-auto">
-            <NavLink to="/" currentPath={path} label="Home" />
-            <NavLink to="/about" currentPath={path} label="About" />
-            {token && <NavLink to="/dashboard" currentPath={path} label="Dashboard" />}
-            {!token && (
-              <Link
-                to="/register"
-                className="bg-rose-700 text-white px-4 py-2 rounded-md hover:bg-rose-600 transition"
-              >
-                Sign Up
-              </Link>
-            )}
-            {token && (
-              <button
-                onClick={onLogOutHandler}
-                className="bg-rose-700 text-white px-4 py-2 rounded-md hover:bg-rose-600 transition"
-              >
-                Log Out
-              </button>
-            )}
-          </nav>
-
-          {/* Mobile Toggle */}
-          <button
-            onClick={toggleNavbar}
-            className="sm:hidden text-white text-3xl focus:outline-none"
-            aria-label="Toggle menu"
+    <header className="bg-custom-gradient sticky top-0 z-50 shadow-md w-full">
+      {/* Full-width Navbar container */}
+      <div className="w-full px-6 sm:px-12 h-16 flex items-center justify-between">
+        {/* Logo: Center on mobile, left on larger screens */}
+        <div className="flex-1 flex justify-center sm:justify-start">
+          <Link
+            to="/"
+            className="text-white text-2xl font-bold italic tracking-wide"
           >
-            {navbarOpen ? <RxCross2 /> : <IoIosMenu />}
-          </button>
+            Shrinkify
+          </Link>
         </div>
+
+        {/* Desktop Nav: Right aligned */}
+        <nav className="hidden sm:flex gap-8 items-center justify-end flex-1">
+          <NavLink to="/" currentPath={path} label="Home" />
+          <NavLink to="/about" currentPath={path} label="About" />
+          {token && <NavLink to="/dashboard" currentPath={path} label="Dashboard" />}
+          {!token && (
+            <Link
+              to="/register"
+              className="bg-rose-700 text-white px-4 py-2 rounded-md hover:bg-rose-600 transition"
+            >
+              Sign Up
+            </Link>
+          )}
+          {token && (
+            <button
+              onClick={onLogOutHandler}
+              className="bg-rose-700 text-white px-4 py-2 rounded-md hover:bg-rose-600 transition"
+            >
+              Log Out
+            </button>
+          )}
+        </nav>
+
+        {/* Mobile Hamburger Toggle */}
+        <button
+          onClick={toggleNavbar}
+          className="sm:hidden text-white text-3xl focus:outline-none"
+          aria-label="Toggle menu"
+        >
+          {navbarOpen ? <RxCross2 /> : <IoIosMenu />}
+        </button>
       </div>
 
-      {/* Mobile Dropdown */}
+      {/* Mobile Dropdown Menu */}
       <div
         className={`sm:hidden transition-all duration-300 ease-in-out overflow-hidden ${
           navbarOpen ? "max-h-60 py-4 bg-custom-gradient" : "max-h-0 py-0 bg-transparent"
         }`}
       >
-        <ul className="flex flex-col gap-4 text-white px-4">
+        <ul className="flex flex-col gap-4 text-white px-6">
           <NavLink to="/" currentPath={path} label="Home" mobile />
           <NavLink to="/about" currentPath={path} label="About" mobile />
           {token && <NavLink to="/dashboard" currentPath={path} label="Dashboard" mobile />}
@@ -95,7 +97,7 @@ const Navbar = () => {
   );
 };
 
-// ✅ Reusable NavLink component
+// 🔁 Reusable NavLink Component
 const NavLink = ({ to, label, currentPath, mobile = false }) => {
   const isActive = currentPath === to;
   return (
