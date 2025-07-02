@@ -20,27 +20,27 @@ ChartJS.register(
 );
 
 const Graph = ({ graphData }) => {
-  const labels = graphData?.map((item) => `${item.clickDate}`);
-  const userPerDay = graphData?.map((item) => item.count);
+  const safeData = graphData || [];
+
+  const labels = safeData.map((item) => `${item.clickDate}`);
+  const userPerDay = safeData.map((item) => item.count);
 
   const data = {
-    labels: graphData.length > 0 ? labels : ["", "", "", "", "", "", ""],
+    labels: safeData.length > 0 ? labels : ["", "", "", "", "", "", ""],
     datasets: [
       {
         label: "Total Clicks",
-        data: graphData.length > 0 ? userPerDay : [1, 3, 2, 5, 4, 6, 3],
+        data: safeData.length > 0 ? userPerDay : [1, 3, 2, 5, 4, 6, 3],
         backgroundColor: (context) => {
           const ctx = context.chart.ctx;
           const gradient = ctx.createLinearGradient(0, 0, 0, 300);
-
-          if (graphData.length > 0) {
+          if (safeData.length > 0) {
             gradient.addColorStop(0, "#3b82f6");
             gradient.addColorStop(1, "#60a5fa");
           } else {
             gradient.addColorStop(0, "rgba(59, 130, 246, 0.2)");
             gradient.addColorStop(1, "rgba(96, 165, 250, 0.2)");
           }
-
           return gradient;
         },
         borderRadius: 6,
@@ -56,17 +56,14 @@ const Graph = ({ graphData }) => {
       legend: {
         display: true,
         labels: {
-          color: "#e5e7eb", // gray-200
-          font: {
-            size: 14,
-            weight: "bold",
-          },
+          color: "#e5e7eb",
+          font: { size: 14, weight: "bold" },
         },
       },
       tooltip: {
-        backgroundColor: "#1f2937", // gray-800
-        titleColor: "#f9fafb",      // gray-50
-        bodyColor: "#e5e7eb",       // gray-200
+        backgroundColor: "#1f2937",
+        titleColor: "#f9fafb",
+        bodyColor: "#e5e7eb",
         borderColor: "#3b82f6",
         borderWidth: 1,
         cornerRadius: 6,
@@ -75,50 +72,32 @@ const Graph = ({ graphData }) => {
     scales: {
       y: {
         beginAtZero: true,
-        grid: {
-          color: "rgba(255,255,255,0.1)",
-        },
+        grid: { color: "rgba(255,255,255,0.1)" },
         ticks: {
-          color: "#d1d5db", // gray-300
+          color: "#d1d5db",
           callback: function (value) {
-            if (Number.isInteger(value)) {
-              return value.toString();
-            }
-            return "";
+            return Number.isInteger(value) ? value.toString() : "";
           },
         },
         title: {
           display: true,
           text: "Number Of Clicks",
-          color: "#e5e7eb", // gray-200
-          font: {
-            size: 16,
-            weight: "bold",
-          },
+          color: "#e5e7eb",
+          font: { size: 16, weight: "bold" },
         },
       },
       x: {
-        grid: {
-          display: false,
-        },
-        ticks: {
-          color: "#d1d5db",
-        },
+        grid: { display: false },
+        ticks: { color: "#d1d5db" },
         title: {
           display: true,
           text: "Date",
           color: "#e5e7eb",
-          font: {
-            size: 16,
-            weight: "bold",
-          },
+          font: { size: 16, weight: "bold" },
         },
       },
     },
-    animation: {
-      duration: 1000,
-      easing: "easeOutQuart",
-    },
+    animation: { duration: 1000, easing: "easeOutQuart" },
   };
 
   return (
