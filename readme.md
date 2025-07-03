@@ -140,10 +140,11 @@ VITE_REACT_BACKEND_URL=https://your-backend.azure.com
 
 
 ## 📸 Screenshots
-**Dashboard**
+### 🔗 Dashboard
+
 ![img.png](img.png)
 
-
+### 📊 Analytics Chart
 
 ![img_1.png](img_1.png)
 
