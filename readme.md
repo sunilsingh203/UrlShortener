@@ -39,9 +39,9 @@ POST /api/auth/public/register
 Content-Type: application/json
 
 {
-  "username": "sandeep",
+  "username": "username",
   "email": "sandeep@megmail2.com",
-  "password": "System@123"
+  "password": "password"
 }
 ```
 **URL:**
@@ -57,8 +57,8 @@ POST /api/auth/public/login
 Content-Type: application/json
 
 {
-  "username": "sandeep singh2",
-  "password": "System@123"
+  "username": "username",
+  "password": "password"
 }
 ```
 ✅ Returns a **JWT token** to be used in `Authorization` header.
