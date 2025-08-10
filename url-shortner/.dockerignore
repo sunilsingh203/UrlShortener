@@ -1,0 +1,28 @@
+# Maven target directory
+target
+
+# Local & IDE configs
+.idea
+.vscode
+*.iml
+
+# Logs
+*.log
+logs
+log
+
+# OS-generated files
+.DS_Store
+Thumbs.db
+
+# Git files
+.git
+.gitignore
+
+# Node stuff (if frontend is inside repo but not needed for backend build)
+frontend/
+node_modules/
+
+# Other temp files
+*.tmp
+*.swp
